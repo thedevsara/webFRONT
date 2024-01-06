@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sara 06</title>
+</head>
+<body>
+    <script>
+        /*Escreva uma função chamada encontraMaiorNumero que recebe um array 
+        de números como parâmetro e retorna o maior número presente no array. */
+        
+        function encontraMaiorNumero(array) {
+        let maiorNumero = array[0]; // Assume que o primeiro elemento é o maior
+
+        for (let i = 1; i < array.length; i++) {
+            if (array[i] > maiorNumero) {
+            maiorNumero = array[i];
+            }
+        }
+
+        return maiorNumero;
+        }
+        const numeros = [5, 10, 2, 8, 3];
+        const maior = encontraMaiorNumero(numeros);
+        document.write(maior); // Output: 10
+
+
+    </script>
+    
+</body>
+</html>

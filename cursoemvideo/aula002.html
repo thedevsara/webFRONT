@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // Inicialize as variáveis do maior e menor número
+        var maior = 0
+        var menor = 999999
+
+        while (true) {
+        // Solicite ao usuário que insira um número
+        var numero = parseInt(prompt("Digite um número (ou um número negativo para encerrar):"));
+
+        // Verifique se o número é negativo, se for, encerre o loop
+        if (numero < 0) {
+            break;
+        }
+
+        // Atualize o maior e menor número
+        if (numero > maior) {
+            maior = numero;
+        }
+        if (numero < menor) {
+            menor = numero;
+        }
+        }
+
+        // Exiba o maior e menor número
+        console.log("Maior número: " + maior);
+        console.log("Menor número: " + menor);
+
+    </script>
+    
+</body>
+</html>

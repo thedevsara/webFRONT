@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sistema Rifa</title>
+  <style>
+    body {
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 200px;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #4c54af;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: center;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Sorteio Rifa ADS</h2>
+
+  <form id="formularioCadastro">
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" required><br>
+    <label for="numero">Número Escolhido:</label>
+    <input type="number" id="numero" required><br>
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <h2>Lista de Participantes</h2>
+  <ul id="listaParticipantes"></ul>
+  <button id="botaoSortear">Sortear</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    class Participante {
+      constructor(nome, numero) {
+        this.nome = nome;
+        this.numero = numero;
+      }
+    }
+
+    class Rifa {
+      constructor() {
+        this.participantes = [];
+        this.formulario = document.getElementById('formularioCadastro');
+        this.botaoSortear = document.getElementById('botaoSortear');
+        this.listaParticipantes = document.getElementById('listaParticipantes');
+        this.resultadoDiv = document.getElementById('resultado');
+
+        this.formulario.addEventListener('submit', this.cadastrarParticipante.bind(this));
+        this.botaoSortear.addEventListener('click', this.sortear.bind(this));
+      }
+
+      cadastrarParticipante(event) {
+        event.preventDefault();
+
+        const nome = document.getElementById('nome').value.trim();
+        const numero = parseInt(document.getElementById('numero').value);
+
+        if (!nome || isNaN(numero) || numero <= 0) {
+          this.exibirAlerta('Informe um número válido');
+          return;
+        }
+
+        if (!this.validarNome(nome)) {
+          this.exibirAlerta('Informe um nome válido (apenas letras)');
+          return;
+        }
+
+        if (this.verificarDuplicidade(nome, numero)) {
+          this.exibirAlerta('Nome ou número já cadastrados!');
+          return;
+        }
+
+        const participante = new Participante(nome, numero);
+        this.participantes.push(participante);
+        this.atualizarListaParticipantes();
+        this.limparCampos();
+        this.exibirAlerta('Cadastro realizado com sucesso!');
+      }
+
+      sortear() {
+        if (this.participantes.length === 0) {
+          this.exibirResultado('Cadastre pelo menos um participante antes de realizar o sorteio.');
+          return;
+        }
+
+        const indiceSorteado = Math.floor(Math.random() * this.participantes.length);
+        const participanteSorteado = this.participantes[indiceSorteado];
+        this.exibirResultado('Ganhador: ' + participanteSorteado.numero + ' - ' + participanteSorteado.nome);
+      }
+
+      verificarDuplicidade(nome, numero) {
+        for (let i = 0; i < this.participantes.length; i++) {
+          if (this.participantes[i].nome === nome || this.participantes[i].numero === numero) {
+            return true; // Duplicidade encontrada
+          }
+        }
+        return false; // Sem duplicidade
+      }
+
+      validarNome(nome) {
+        const letras = /^[A-Za-z]+$/;
+        return letras.test(nome);
+      }
+
+      atualizarListaParticipantes() {
+        this.listaParticipantes.innerHTML = '';
+        this.participantes.forEach(participante => {
+          const itemLista = document.createElement('li');
+          itemLista.textContent = participante.nome + ' (Número: ' + participante.numero + ')';
+          this.listaParticipantes.appendChild(itemLista);
+        });
+      }
+
+      limparCampos() {
+        document.getElementById('nome').value = '';
+        document.getElementById('numero').value = '';
+      }
+
+      exibirAlerta(mensagem) {
+        alert(mensagem);
+      }
+
+      exibirResultado(resultado) {
+        this.resultadoDiv.textContent = resultado;
+      }
+    }
+
+    const rifa = new Rifa();
+  </script>
+</body>
+</html>

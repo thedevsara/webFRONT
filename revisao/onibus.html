@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Passagens de Ônibus</title>
+</head>
+<body>
+    <script>
+        var passagens = new Array(45)
+
+        class Passagem{
+            poltrona
+            origem
+            destino
+            valor
+        }
+
+        menu()
+
+        function menu(){
+            let opcaoDesejada = parseInt(prompt("Digite a opção desejada:" +
+                                            "\n1 - Vender passagem" +
+                                            "\n2 - Passagens disponíveis" +
+                                            "\n3 – Passagens vendidas" +
+                                            "\n4 – Saldo" +
+                                            "\n5 - Sair"))
+
+            switch(opcaoDesejada){
+                case 1:
+                    venderPassagem()
+                    break
+                case 2:
+                    passagensDisponiveis()
+                    break
+                case 3:
+                    passagensVendidas()
+                    break
+                case 4:
+                    saldo()
+                    break
+                case 5:
+                    break
+            }
+        }
+
+        function novaPassagem(novaPoltrona, origemCliente, destinoCliente, valorPassagem){
+            let novaPassagem = new Passagem()
+			novaPassagem.poltrona = novaPoltrona
+			novaPassagem.origem = origemCliente
+			novaPassagem.destino = destinoCliente
+            novaPassagem.valor = valorPassagem
+			passagens[novaPoltrona+1] = novaPassagem
+        }
+
+        function venderPassagem(){
+            let novaPoltrona = parseInt(prompt("Qual poltrona você deseja?"))
+
+            if(novaPoltrona >= 1 && novaPoltrona <= 45){
+                let origemCliente = prompt("Qual origem?")
+                let destinoCliente = prompt("Qual destino?")
+                let valorPassagem = parseInt(prompt("Qual valor?"))
+
+                novaPassagem(novaPoltrona, origemCliente, destinoCliente, valorPassagem)
+
+                alert("Passagem vendida")
+            }else{
+                alert("Poltrona inválida")
+
+                venderPassagem()
+            }
+            menu()
+        }
+
+        function passagensDisponiveis(){
+            document.write(`<h2>Poltronas Disponíveis:</h2><br>`)
+
+			for (let i = 0; i < passagens.length; i++){
+				if (passagens[i+1] === undefined) {
+					document.write(`${i} <br>`)
+				}
+			}
+        }
+
+        function passagensVendidas(){
+            document.write(`<h2>Poltronas Vendidas:</h2><br>`)
+
+			for (let i = 0; i < passagens.length; i++){
+				if (passagens[i+1] !== undefined) {
+					document.write(`${i} <br>`)
+				}
+			}
+        }
+
+        function saldo(){
+            let somador = 0
+
+            for (let i = 0; i < passagens.length; i++){
+				if (passagens[i] !== undefined) {
+					somador = somador + passagens[i].valor
+				}
+			}
+
+            alert("Seu saldo é de: R$" + somador)
+
+            menu()
+        }
+    </script>
+</body>
+</html>

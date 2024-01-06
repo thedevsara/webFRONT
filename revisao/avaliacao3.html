@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   
+    <title>Prova 3</title>
+</head>
+<body>
+
+    <script>
+        //opcao de cadastrar , imprimir os produtos cadastrados, pesquisar, vender, adicionar
+        let produto = []
+        class Produto {
+            constructor(codigo, nome, valor, estoque, estoqueMin){
+                this.codigo = codigo
+                this.nome = nome
+                this.valor =  valor
+                this.estoque = estoque
+                this.estoqueMin = estoqueMin
+            }
+        }
+        menu()
+
+        function menu(){
+            let opcaoDesejada = parseInt(prompt("\nMenu" + "\n1 - Cadastrar Produto" + "\n2 - Visualizar Produtos Cadastrados" + 
+            "\n3 - Pesquisar por produtos" + "\n4 - Vender Produto" + "\n5 - Adicionar Produtos"))
+
+            switch(opcaoDesejada){
+                case 1:
+                    cadastrarProduto()
+                    break
+                case 2:
+                    visualizarProduto()
+                    break
+                case 3:
+                    pesquisarProduto()
+                    break
+                case 4:
+                    venderProduto()
+                    break
+                case 5:
+                    adicionarProduto()
+                    break
+            }
+        }
+    
+        function cadastrarProduto() {
+        let codigo = prompt("Informe o código do produto:")
+        let nome = prompt("Informe o nome do produto:")
+        let valor = prompt("Informe o valor do produto:")
+        let novoProduto = {codigo: codigo , nome: nome, valor: valor}
+        produto.push(novoProduto)
+        alert(`Produto cadastrado com sucesso!`)
+        }
+
+        menu()
+
+        function visualizarProduto() {
+        let visualizar = "";
+        produtos.forEach(produto => {
+            visualizar += `Nome: ${produto.nome}, Código: ${produto.codigo}, Valor: ${produto.valor}\n`
+        });
+        alert(visualizar);
+        }
+
+
+        function pesquisarProduto() {
+        let nomeProduto = prompt("Digite o nome do produto que deseja pesquisar:")
+        let produtoEncontrado = produto.find(produto => produto.nome === nomeProduto)
+        if (produtoEncontrado) {
+            alert(`Produto encontrado: Código: ${produtoEncontado.codigo}, Nome: ${produtoEncontrado.nome}, Valor: ${produtoEncontrado.valor}`)
+        } else {
+            alert("Produto não encontrado.")
+        }
+        }
+        menu()
+
+        function venderProduto(){
+            let novoProduto = parseInt(prompt("Qual produto você deseja?"))
+
+        }
+
+            function adicionarProduto(novoCodigo, novoNome, novoValor){
+            let novoProduto = new Produto()
+			adicionarProduto.codigo = novoProduto
+			adicionarProduto.nome = novoNome
+            adicionarProduto.valor = novoValor
+			
+			produtos[novoProduto+1] = novoProduto
+            }
+        
+        menu()
+
+       
+    </script>
+</body>
+</html>

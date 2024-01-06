@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+    <script>
+        class Produto {
+  constructor(codigo, nome, valor, estoqueMinimo) {
+    this.codigo = codigo;
+    this.nome = nome;
+    this.valor = valor;
+    this.estoqueMinimo = estoqueMinimo;
+    this.quantidadeEstoque = 0;
+  }
+}
+
+const vetorProdutos = [];
+
+function cadastrarProduto() {
+  const codigo = prompt("Digite o código do produto:");
+  const nome = prompt("Digite o nome do produto:");
+  const valor = parseFloat(prompt("Digite o valor do produto:"));
+  const estoqueMinimo = parseInt(prompt("Digite o estoque mínimo do produto:"));
+
+  const produto = new Produto(codigo, nome, valor, estoqueMinimo);
+  vetorProdutos.push(produto);
+
+  alert("Produto cadastrado com sucesso!");
+}
+
+function imprimirProdutos() {
+  let produtosCadastrados = "Lista de produtos cadastrados:\n";
+  for (let i = 0; i < vetorProdutos.length; i++) {
+    const produto = vetorProdutos[i];
+    produtosCadastrados += `Código: ${produto.codigo}\n`;
+    produtosCadastrados += `Nome: ${produto.nome}\n`;
+    produtosCadastrados += `Valor: R$ ${produto.valor}\n`;
+    produtosCadastrados += `Estoque Mínimo: ${produto.estoqueMinimo}\n`;
+    produtosCadastrados += `Quantidade em Estoque: ${produto.quantidadeEstoque}\n`;
+    produtosCadastrados += "---------------\n";
+  }
+
+  alert(produtosCadastrados);
+}
+
+function pesquisarProduto() {
+  const codigo = prompt("Digite o código do produto:");
+  let produtoEncontrado = null;
+
+  for (let i = 0; i < vetorProdutos.length; i++) {
+    if (vetorProdutos[i].codigo === codigo) {
+      produtoEncontrado = vetorProdutos[i];
+      break;
+    }
+  }
+
+  if (produtoEncontrado) {
+    let infoProduto = "Produto encontrado!\n";
+    infoProduto += `Código: ${produtoEncontrado.codigo}\n`;
+    infoProduto += `Nome: ${produtoEncontrado.nome}\n`;
+    infoProduto += `Valor: R$ ${produtoEncontrado.valor}\n`;
+    infoProduto += `Estoque Mínimo: ${produtoEncontrado.estoqueMinimo}\n`;
+    infoProduto += `Quantidade em Estoque: ${produtoEncontrado.quantidadeEstoque}\n`;
+    alert(infoProduto);
+  } else {
+    alert("Produto não encontrado.");
+  }
+}
+
+function venderProduto() {
+  const codigo = prompt("Digite o código do produto:");
+  const quantidade = parseInt(prompt("Digite a quantidade a ser vendida:"));
+  let produtoEncontrado = null;
+
+  for (let i = 0; i < vetorProdutos.length; i++) {
+    if (vetorProdutos[i].codigo === codigo) {
+      produtoEncontrado = vetorProdutos[i];
+      break;
+    }
+  }
+
+  if (produtoEncontrado) {
+    if (produtoEncontrado.quantidadeEstoque >= quantidade) {
+      produtoEncontrado.quantidadeEstoque -= quantidade;
+      alert(`Venda realizada com sucesso! Quantidade em estoque atual: ${produtoEncontrado.quantidadeEstoque}`);
+    } else {
+      alert("Estoque insuficiente para realizar a venda.");
+    }
+  } else {
+    alert("Produto não encontrado.");
+  }
+}
+
+function entradaEstoque() {
+  const codigo = prompt("Digite o código do produto:");
+  const quantidade = parseInt(prompt("Digite a quantidade a ser adicionada ao estoque:"));
+  let produtoEncontrado = null;
+
+  for (let i = 0; i < vetorProdutos.length; i++) {
+    if (vetorProdutos[i].codigo === codigo) {
+      produtoEncontrado = vetorProdutos[i];
+      break;
+    }
+  }
+
+  if (produtoEncontrado) {
+    produtoEncontrado.quantidadeEstoque += quantidade;
+    alert(`Entrada de estoque realizada com sucesso! Quantidade em estoque atual: ${produtoEncontrado.quantidadeEstoque}`);
+  } else {
+    alert("Produto não encontrado.");
+  }
+}
+
+function analisarEstoque() {
+  let produtosAbaixoEstoqueMinimo = "Produtos com estoque abaixo do mínimo:\n";
+  for (let i = 0; i < vetorProdutos.length; i++) {
+    const produto = vetorProdutos[i];
+    if (produto.quantidadeEstoque < produto.estoqueMinimo) {
+      produtosAbaixoEstoqueMinimo += `- ${produto.nome}\n`;
+    }
+  }
+
+  alert(produtosAbaixoEstoqueMinimo);
+}
+
+function exibirMenu() {
+  let menu = "----- Menu -----\n";
+  menu += "1. Cadastrar produto\n";
+  menu += "2. Imprimir produtos cadastrados\n";
+  menu += "3. Pesquisar produto\n";
+  menu += "4. Vender produto\n";
+  menu += "5. Entrada de produtos no estoque\n";
+  menu += "6. Analisar estoque mínimo\n";
+  menu += "0. Sair\n";
+  menu += "-----------------\n";
+
+  return prompt(menu);
+}
+
+function executarOpcao(opcao) {
+  switch (opcao) {
+    case "1":
+      cadastrarProduto();
+      break;
+    case "2":
+      imprimirProdutos();
+      break;
+    case "3":
+      pesquisarProduto();
+      break;
+    case "4":
+      venderProduto();
+      break;
+    case "5":
+      entradaEstoque();
+      break;
+    case "6":
+      analisarEstoque();
+      break;
+    case "0":
+      alert("Encerrando programa...");
+      return false;
+    default:
+      alert("Opção inválida.");
+  }
+
+  return true;
+}
+
+alert("Bem-vindo ao sistema de gerenciamento de produtos!");
+
+let executarPrograma = true;
+
+while (executarPrograma) {
+  const opcao = exibirMenu();
+  executarPrograma = executarOpcao(opcao);
+}
+
+    </script>
+    
+</body>
+</html>
